@@ -3,9 +3,6 @@ name: Build MedNova APK
 on:
   workflow_dispatch:
   push:
-    paths:
-      - "MedNova-Android-Project-v1.zip"
-      - ".github/workflows/android.yml"
 
 jobs:
   build:
@@ -18,12 +15,23 @@ jobs:
       - name: Extract MedNova project
         run: |
           unzip -o MedNova-Android-Project-v1.zip
-          cd MedNova
-          gradle wrapper --gradle-version 8.7
+          echo "Extracted files:"
+          find . -maxdepth 3 -type f | head -100
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.7'
 
       - name: Build APK
         working-directory: MedNova
-        run: ./gradlew assembleDebug
+        run: gradle assembleDebug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
