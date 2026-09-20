@@ -14,7 +14,7 @@ jobs:
 
       - name: Extract MedNova project
         run: |
-          unzip -o MedNova-Android-Project-v1.zip
+          unzip -o MedNova-Android-Project-v1-Fixed-Replacement.zip
           echo "Extracted files:"
           find . -maxdepth 3 -type f | head -100
 
